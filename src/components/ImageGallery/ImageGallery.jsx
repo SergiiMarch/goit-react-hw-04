@@ -1,6 +1,6 @@
 import css from "./ImageGallery.module.css";
 import ImageCard from "../ImageCard/ImageCard";
-import { ClipLoader } from "react-loader-spinner";
+// import { ClipLoader } from "react-loader-spinner";
 
 const ImageGallery = ({ images, loading }) => {
   if (!images || images.length === 0) {
@@ -18,14 +18,14 @@ const ImageGallery = ({ images, loading }) => {
           </li>
         ))}
       </ul>
-      {loading && (
+      {/* {loading && (
         <ClipLoader
           color="#306cce"
           loading={loading}
           size={80}
           aria-label="loading-clip"
         />
-      )}
+      )} */}
     </>
   );
 };
