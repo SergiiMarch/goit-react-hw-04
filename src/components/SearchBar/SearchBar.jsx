@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { Audio } from "react-loader-spinner";
 
 const SearchBar = ({ onSubmit }) => {
   const [inputValue, setInputValue] = useState("");
