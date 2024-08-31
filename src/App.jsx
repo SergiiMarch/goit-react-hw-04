@@ -5,12 +5,16 @@ import SearchBar from "./components/SearchBar/SearchBar";
 import axios from "axios";
 import { Toaster } from "react-hot-toast";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
+import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
 
 function App() {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const handleSearchSubmit = async (query) => {
     setLoading(true);
+    setError(null);
+
     try {
       const response = await axios.get(
         `https://api.unsplash.com/search/photos`,
@@ -23,9 +27,13 @@ function App() {
         }
       );
 
-      setImages(response.data.results);
+      if (response.data.results.length === 0) {
+        setError("No images found for the query.");
+      } else {
+        setImages(response.data.results);
+      }
     } catch (error) {
-      console.error("Error fetching images:", error);
+      setError("Error fetching images");
     } finally {
       setLoading(false);
     }
@@ -34,7 +42,12 @@ function App() {
     <>
       <SearchBar onSubmit={handleSearchSubmit} />
       <Toaster />
-      <ImageGallery images={images} loading={loading} />
+
+      {error ? (
+        <ErrorMessage message={error} />
+      ) : (
+        <ImageGallery images={images} loading={loading} />
+      )}
     </>
   );
 }
