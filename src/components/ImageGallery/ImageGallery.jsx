@@ -1,16 +1,19 @@
+import React from "react";
 import css from "./ImageGallery.module.css";
 import ImageCard from "../ImageCard/ImageCard";
 import { FallingLines } from "react-loader-spinner";
 
-const ImageGallery = ({ images, loading }) => {
+const ImageGallery = ({ images, loading, onImageClick }) => {
   if (loading) {
     return (
-      <FallingLines
-        color="#4fa94d"
-        width="100"
-        visible={true}
-        ariaLabel="falling-circles-loading"
-      />
+      <div className={css.loaderWrapper}>
+        <FallingLines
+          color="#4fa94d"
+          width="200"
+          visible={true}
+          ariaLabel="falling-circles-loading"
+        />
+      </div>
     );
   }
 
@@ -21,8 +24,10 @@ const ImageGallery = ({ images, loading }) => {
   return (
     <ul className={css.container}>
       {images.map((image) => (
-        <li key={image.id}>
-          <ImageCard src={image.urls.small} alt={image.description} />
+        <li key={image.id} onClick={() => onImageClick(image.urls.regular)}>
+          <div>
+            <ImageCard src={image.urls.small} alt={image.description} />
+          </div>
         </li>
       ))}
     </ul>
